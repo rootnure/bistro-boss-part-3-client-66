@@ -1,4 +1,11 @@
-# React + Vite
+# Bistro Boss (Part 3)
+
+## Work continue form [This Repository](https://github.com/rootnure/bistro-boss-part-2-65)
+
+## Today's work
+- Firebase Authentication
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

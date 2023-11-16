@@ -31,7 +31,7 @@ const Category = () => {
                     clickable: true,
                 }}
                 modules={[Pagination]}
-                className="mySwiper w-full md:w-11/12 lg:w-1/2"
+                className="mySwiper w-full md:w-11/12 lg:w-2/3 xl:w-1/2"
             >
                 {
                     categories.map(category => <SwiperSlide key={category._id}>

@@ -7,6 +7,7 @@ const NavBar = () => {
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/">Home</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/menu">Our Menu</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/order">Order Now</NavLink></li>
+        <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">Login</NavLink></li>
     </>
     return (
         <>

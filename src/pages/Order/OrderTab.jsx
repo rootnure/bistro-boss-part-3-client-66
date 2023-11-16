@@ -25,7 +25,7 @@ const OrderTab = ({ foodItems }) => {
             <Swiper
                 pagination={pagination}
                 modules={[Pagination]}
-                className="mySwiper"
+                className="mySwiper orderPageUniqueClass"
             >
                 {
                     pages.map(page => <SwiperSlide key={page}>
