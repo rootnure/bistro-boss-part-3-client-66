@@ -7,16 +7,17 @@ import { useEffect, useRef, useState } from "react";
 import useAuthHook from "../../hooks/useAuthHook";
 import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../Shared/SocialLogin";
+import { useForm } from "react-hook-form"
 
 const Register = () => {
     const { createUser } = useAuthHook();
     const navigate = useNavigate();
+
     const captchaRef = useRef();
     const [disabled, setDisabled] = useState(true);
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
-
     const handleValidateCaptcha = () => {
         const userCaptchaValue = captchaRef.current.value;
         if (validateCaptcha(userCaptchaValue)) {
@@ -27,19 +28,16 @@ const Register = () => {
         }
     }
 
-    const handleSignUp = async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        createUser(email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
-                navigate("/");
-            })
-            .catch(err => console.error(err));
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data)
     }
+
     return (
         <>
             <Helmet>
@@ -52,24 +50,29 @@ const Register = () => {
                     </div>
                     <div className="">
                         <h2 className="text-4xl font-bold text-center">Register</h2>
-                        <form onSubmit={handleSignUp} className="card-body">
+                        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Name</span>
                                 </label>
-                                <input type="text" name="name" autoComplete="off" placeholder="Full Name" className="input input-bordered px-6" required />
+                                <input type="text" {...register("name", { required: true })} name="name" autoComplete="off" placeholder="Full Name" className="input input-bordered px-6" required />
+                                {errors.name && <span className="text-red-500 text-sm">This field is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Email</span>
                                 </label>
-                                <input type="email" name="email" autoComplete="off" placeholder="Your Email" className="input input-bordered px-6" required />
+                                <input type="email" {...register("email", { required: true })} name="email" autoComplete="off" placeholder="Your Email" className="input input-bordered px-6" required />
+                                {errors.email && <span className="text-sm text-red-500">This field is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Password</span>
                                 </label>
-                                <input type="password" name="password" placeholder="Enter your password" className="input input-bordered px-6" required />
+                                <input type="password" {...register("password", { required: true, minLength: 6, maxLength: 128 })} name="password" placeholder="Enter your password" className="input input-bordered px-6" required />
+                                {errors.password?.type === "required" && <span className="text-sm text-red-500">This field is required</span>}
+                                {errors.password?.type === "minLength" && <span className="text-sm text-red-500">Must be at lest 6 characters or long</span>}
+                                {errors.password?.type === "maxLength" && <span className="text-sm text-red-500">Cannot be more than 128 character long</span>}
                             </div>
                             <div className="form-control mt-2">
                                 <label className="label mx-4">
