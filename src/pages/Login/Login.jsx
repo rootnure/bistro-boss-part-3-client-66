@@ -2,8 +2,33 @@ import { Helmet } from "react-helmet-async";
 import bgImg from "../../assets/login-register-bg/auth-bg.png";
 import authImage from "../../assets/others/authentication2.png";
 import WoodenBtn from "../../components/WoodenBtn";
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { useEffect, useRef, useState } from "react";
 
 const Login = () => {
+    const captchaRef = useRef();
+    const [disabled, setDisabled] = useState(true);
+    useEffect(() => {
+        loadCaptchaEnginge(6);
+    }, [])
+
+    const handleValidateCaptcha = () => {
+        const userCaptchaValue = captchaRef.current.value;
+        if (validateCaptcha(userCaptchaValue)) {
+            setDisabled(false);
+        } else {
+            captchaRef.current.value = "";
+            setDisabled(true);
+        }
+    }
+
+    const handleLogin = e => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log({ email, password });
+    }
     return (
         <>
             <Helmet>
@@ -16,12 +41,12 @@ const Login = () => {
                     </div>
                     <div className="order-first md:order-last">
                         <h2 className="text-4xl font-bold text-center">Login</h2>
-                        <form className="card-body">
+                        <form onSubmit={handleLogin} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Email</span>
                                 </label>
-                                <input type="email" name="email" placeholder="Your Email" className="input input-bordered px-6" required />
+                                <input type="email" name="email" autoComplete="off" placeholder="Your Email" className="input input-bordered px-6" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -34,12 +59,13 @@ const Login = () => {
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text text-xl">Verify Captcha</span>
+                                    <LoadCanvasTemplate /> {disabled || <p className="text-xl font-bold text-green-600 text-right me-6">Human Verified</p>}
                                 </label>
-                                <input type="text" name="captcha" placeholder="Enter the text above" className="input input-bordered px-6" required />
+                                <input ref={captchaRef} type="text" name="captcha" placeholder="Type the text above" className="input input-bordered px-6" required />
+                                <button type="button" onClick={handleValidateCaptcha} className="btn btn-outline btn-sm">I Am Human</button>
                             </div>
-                            <div className="form-control mt-6" disabled>
-                                <WoodenBtn disabled>SignIn</WoodenBtn>
+                            <div className="form-control mt-6">
+                                <WoodenBtn disabled={disabled}>{disabled ? "Verify Captcha First" : "SignIn"}</WoodenBtn>
                             </div>
                         </form>
                     </div>

@@ -3,7 +3,9 @@
 ## Work continue form [This Repository](https://github.com/rootnure/bistro-boss-part-2-65)
 
 ## Today's work
-- Firebase Authentication
+- Captcha, Re-captcha validation
+- React Hook Forms
+- Firebase Authentication (Email-password & Google)
 
 ## React + Vite
 
