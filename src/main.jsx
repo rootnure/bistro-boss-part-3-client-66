@@ -5,6 +5,8 @@ import "./index.css";
 import { router } from './Routes/Routes';
 import { HelmetProvider } from 'react-helmet-async';
 import AuthProvider from './providers/AuthProvider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <HelmetProvider>
         <div className='max-w-[1920px] mx-auto'>
+          <ToastContainer />
           <RouterProvider router={router} />
         </div>
       </HelmetProvider>

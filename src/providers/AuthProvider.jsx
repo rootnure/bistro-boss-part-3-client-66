@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import PropTypes from "prop-types";
 import { createContext, useState } from "react";
 import auth from "../firbase/firebase.config";
@@ -19,6 +19,13 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
 
+    const updateUserInfo = (name = null, photo = "https://i.ibb.co/yp2YxZf/Profile.png") => {
+        setLoading(true);
+        return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo
+        })
+    }
+
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
@@ -29,6 +36,7 @@ const AuthProvider = ({ children }) => {
         loading,
         createUser,
         passwordLogin,
+        updateUserInfo,
         logOut
     }
 

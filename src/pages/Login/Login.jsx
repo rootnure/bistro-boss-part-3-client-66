@@ -5,11 +5,12 @@ import WoodenBtn from "../../components/WoodenBtn";
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useEffect, useRef, useState } from "react";
 import useAuthHook from "../../hooks/useAuthHook";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../Shared/SocialLogin";
 
 const Login = () => {
     const { passwordLogin } = useAuthHook();
+    const navigate = useNavigate();
 
     const captchaRef = useRef();
     const [disabled, setDisabled] = useState(true);
@@ -33,9 +34,9 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         passwordLogin(email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
+            .then(res => {
+                console.log(res.user);
+                navigate("/");
             })
             .catch(err => console.error(err));
     }
@@ -52,12 +53,14 @@ const Login = () => {
                     <div className="order-first md:order-last">
                         <h2 className="text-4xl font-bold text-center">Login</h2>
                         <form onSubmit={handleLogin} className="card-body">
+                            {/* email */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Email</span>
                                 </label>
                                 <input type="email" name="email" autoComplete="off" placeholder="Your Email" className="input input-bordered px-6" required />
                             </div>
+                            {/* password */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text text-xl">Password</span>
@@ -67,11 +70,18 @@ const Login = () => {
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
+                            {/* captcha */}
                             <div className="form-control">
                                 <label className="label mx-4">
-                                    <LoadCanvasTemplate /> {disabled || <p className="text-xl font-bold text-green-600 text-right">Human Verified</p>}
+                                    <LoadCanvasTemplate /> {disabled || <p className="text-xl font-bold text-green-600 text-right">Success</p>}
                                 </label>
-                                <input ref={captchaRef} type="text" name="captcha" placeholder="Type the text above" className="input input-bordered px-6" required />
+                                <input
+                                    onKeyUp={(e) => e.key === "Enter" ? handleValidateCaptcha() : ""}
+                                    ref={captchaRef}
+                                    type="text" name="captcha"
+                                    placeholder="Type the text above"
+                                    className="input input-bordered px-6"
+                                    required />
                                 <button type="button" onClick={handleValidateCaptcha} className="btn btn-outline btn-sm">I Am Human</button>
                             </div>
                             <div className="form-control mt-6">

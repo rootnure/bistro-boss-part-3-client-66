@@ -1,13 +1,43 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Container from "../../components/Container";
 import { FaBars } from "react-icons/fa";
+import useAuthHook from "../../hooks/useAuthHook";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
+    const { user, logOut } = useAuthHook();
+    const navigate = useNavigate();
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                navigate("/");
+                toast.success('Logout Successfully', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            })
+    }
+
     const navItems = <>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/">Home</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/menu">Our Menu</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/order">Order Now</NavLink></li>
-        <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">Login</NavLink></li>
+        {user ?
+            <>
+                <li onClick={handleLogOut}><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">LogOut</NavLink></li>
+            </> :
+            <>
+                <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">Login</NavLink></li>
+            </>
+
+        }
     </>
     return (
         <>
