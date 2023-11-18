@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.navbar {
+    @apply !uppercase;
+}
+
+.navbar .active {
+    @apply !text-yellow-500 !bg-transparent font-bold;
+}
+
 .react-tabs__tab--selected {
     @apply !text-blue-500 !border-blue-500;
 }

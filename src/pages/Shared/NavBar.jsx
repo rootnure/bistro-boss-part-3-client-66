@@ -3,6 +3,7 @@ import Container from "../../components/Container";
 import { FaBars } from "react-icons/fa";
 import useAuthHook from "../../hooks/useAuthHook";
 import { toast } from "react-toastify";
+import Logo from "../../components/Logo";
 
 const NavBar = () => {
     const { user, logOut } = useAuthHook();
@@ -29,6 +30,7 @@ const NavBar = () => {
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/">Home</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/menu">Our Menu</NavLink></li>
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/order">Order Now</NavLink></li>
+        <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/secret">Secret</NavLink></li>
         {user ?
             <>
                 <li onClick={handleLogOut}><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">LogOut</NavLink></li>
@@ -41,7 +43,7 @@ const NavBar = () => {
     </>
     return (
         <>
-            <div className="bg-black bg-opacity-40 backdrop-blur text-white fixed top-0 z-10 left-0 right-0">
+            <div className="bg-black bg-opacity-50 backdrop-blur text-white fixed top-0 z-10 left-0 right-0">
                 <Container>
                     <div className="navbar">
                         <div className="navbar-start">
@@ -53,7 +55,7 @@ const NavBar = () => {
                                     {navItems}
                                 </ul>
                             </div>
-                            <a className="btn btn-ghost text-xl">Bistro Boss</a>
+                            <Logo></Logo>
                         </div>
                         <div className="navbar-center hidden lg:flex">
                             <ul className="menu menu-horizontal px-1 gap-x-2">

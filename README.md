@@ -3,9 +3,10 @@
 ## Work continue form [This Repository](https://github.com/rootnure/bistro-boss-part-2-65)
 
 ## Today's work
-- Captcha, Re-captcha validation
-- React Hook Forms
+- Captcha, Re-captcha validation [react-simple-captcha](https://www.npmjs.com/package/react-simple-captcha)
+- React Hook Forms (alternative: [formik](https://formik.org/))
 - Firebase Authentication (Email-password & Google)
+- Regex for password and email pattern
 
 ## React + Vite
 

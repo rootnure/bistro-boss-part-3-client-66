@@ -13,7 +13,6 @@ const OrderTab = ({ foodItems }) => {
     const dataPerPage = window.screen.width > 1400 ? 8 : 6;
     const pageCount = Math.ceil(foodItems.length / dataPerPage);
     const pages = [...Array(pageCount).keys()];
-    console.log(pages);
     const pagination = {
         clickable: true,
         renderBullet: function (index, className) {
