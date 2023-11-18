@@ -33,6 +33,8 @@ const NavBar = () => {
         <li><NavLink className="hover:text-white hover:scale-110 duration-75" to="/secret">Secret</NavLink></li>
         {user ?
             <>
+                <span>{user.displayName}</span>
+                <img src={user.photoURL} alt="User Profile Image" className="h-12 rounded-full" />
                 <li onClick={handleLogOut}><NavLink className="hover:text-white hover:scale-110 duration-75" to="/login">LogOut</NavLink></li>
             </> :
             <>

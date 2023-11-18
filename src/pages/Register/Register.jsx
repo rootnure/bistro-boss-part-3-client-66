@@ -17,7 +17,7 @@ const Register = () => {
     const captchaRef = useRef();
     const [disabled, setDisabled] = useState(true);
     useEffect(() => {
-        loadCaptchaEnginge(6);
+        loadCaptchaEnginge(6, "#D1A0541F", "#B73", "lower");
     }, [])
     const handleValidateCaptcha = () => {
         const userCaptchaValue = captchaRef.current.value;
@@ -37,6 +37,7 @@ const Register = () => {
     } = useForm();
 
     const onSubmit = (data) => {
+        console.log(data);
         createUser(data.email, data.password)
             .then(() => {
                 reset();
@@ -75,15 +76,22 @@ const Register = () => {
                                 {/* name */}
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text text-xl">Name</span>
+                                        <span className="label-text text-xl">Name<span className="text-red-500">*</span></span>
                                     </label>
                                     <input type="text" {...register("name", { required: true })} name="name" autoComplete="off" placeholder="Full Name" className="input input-bordered px-6" required />
                                     {errors.name && <span className="text-red-500 text-sm">This field is required</span>}
                                 </div>
+                                {/* photo */}
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text text-xl">Photo</span>
+                                    </label>
+                                    <input type="text" {...register("photo")} name="photo" autoComplete="off" placeholder="Image URL (Direct Link)" className="input input-bordered px-6" />
+                                </div>
                                 {/* email */}
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text text-xl">Email</span>
+                                        <span className="label-text text-xl">Email<span className="text-red-500">*</span></span>
                                     </label>
                                     <input type="email" {...register("email", {
                                         required: true,
@@ -95,7 +103,7 @@ const Register = () => {
                                 {/* password */}
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text text-xl">Password</span>
+                                        <span className="label-text text-xl">Password<span className="text-red-500">*</span></span>
                                     </label>
                                     <input type="password" {...register("password", {
                                         required: true,
@@ -111,7 +119,7 @@ const Register = () => {
                                 {/* captcha */}
                                 <div className="form-control mt-2">
                                     <label className="label mx-4">
-                                        <LoadCanvasTemplate /> {disabled || <p className="text-xl font-bold text-green-600 text-right">Success</p>}
+                                        <LoadCanvasTemplate reloadText="Refresh Captcha" /> {disabled || <p className="text-xl font-bold text-green-600 text-right">Success</p>}
                                     </label>
                                     <input
                                         onKeyUp={(e) => e.key === "Enter" ? handleValidateCaptcha() : ""}
@@ -122,6 +130,9 @@ const Register = () => {
                                         className="input input-bordered px-6"
                                         required />
                                     <button type="button" onClick={handleValidateCaptcha} className="btn btn-outline btn-sm">I Am Human</button>
+                                </div>
+                                <div>
+                                    <p className="text-sm"><span className="text-red-500 text-lg">*</span>required</p>
                                 </div>
                                 {/* submit */}
                                 <div className="form-control mt-6">

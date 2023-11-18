@@ -13,7 +13,6 @@ const Login = () => {
     const { passwordLogin } = useAuthHook();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location);
 
     const captchaRef = useRef();
     const [disabled, setDisabled] = useState(true);
